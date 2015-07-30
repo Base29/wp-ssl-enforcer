@@ -1,0 +1,1 @@
+A simple plugin to enforce SSL (HTTPS) over the domain. If the domain has SSL certificate installed. 
