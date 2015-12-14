@@ -60,7 +60,7 @@ class WSE {
         <?php
         echo '</div>';
     }
-    
+    //Forcing SSL on the frontend
     function wse_force_https(){
         
         //Checking if the site is a multisite
