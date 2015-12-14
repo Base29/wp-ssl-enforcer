@@ -9,6 +9,7 @@
  * License: GPL2
  * Text Domain: wp-ssl-enforcer
  * Domain Path: /languages
+ * 
  * ###########################################################################################
  * 
  * WordPress SSL (HTTPS) Enforcer is free software: you can redistribute it and/or modify
