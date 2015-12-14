@@ -63,6 +63,7 @@ class WSE {
     
     function wse_force_https(){
         
+        //Checking if the site is a multisite
         if(is_multisite()){
         
             $url = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
@@ -80,7 +81,7 @@ class WSE {
         }
 
     }
-    
+    //Forcing SSL on admin area
     function wse_force_admin_https(){
         $c = get_option('wse_force_https_on_admin');
         if($c == 1){
