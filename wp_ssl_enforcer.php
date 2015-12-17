@@ -10,21 +10,21 @@
  * Text Domain: wp-ssl-enforcer
  * Domain Path: /languages
  * 
- * ###########################################################################################
- * 
- * WordPress SSL (HTTPS) Enforcer is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * any later version.
- *
- * WordPress SSL (HTTPS) Enforcer is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with WordPress SSL (HTTPS) Enforcer. If not, see https://www.gnu.org/licenses/gpl-2.0.html.
- * #############################################################################################
+ * #####################################################################################################
+ * #                                                                                                   # 
+ * # WordPress SSL (HTTPS) Enforcer is free software: you can redistribute it and/or modify            # 
+ * # it under the terms of the GNU General Public License as published by                              # 
+ * # the Free Software Foundation, either version 2 of the License, or                                 # 
+ * # any later version.                                                                                # 
+ * #                                                                                                   # 
+ * # WordPress SSL (HTTPS) Enforcer is distributed in the hope that it will be useful,                 # 
+ * # but WITHOUT ANY WARRANTY; without even the implied warranty of                                    # 
+ * # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the                                      #         
+ * # GNU General Public License for more details.                                                      # 
+ * #                                                                                                   #
+ * # You should have received a copy of the GNU General Public License                                 #
+ * # along with WordPress SSL (HTTPS) Enforcer. If not, see https://www.gnu.org/licenses/gpl-2.0.html. #
+ * #####################################################################################################
  */
 
 class WSE {
@@ -39,6 +39,7 @@ class WSE {
     function wse_settings(){
         register_setting('wse_plugin_settings', 'wse_domain_to_force_https');
         register_setting('wse_plugin_settings', 'wse_force_https_on_admin');
+        register_setting('wse_plugin_settings', 'wse_force_https_on_frontend');
     }
     
     // Add admin menu
@@ -63,48 +64,55 @@ class WSE {
                 </tr>
                 <?php endif ?>
                 
+                                <tr>
+                    <td style="padding:0 0 30px"><h4><label><?php _e('Force HTTPS on Frontend', 'wp-ssl-enforcer') ?></label></h4></td>
+                    <td style="padding:0 0 30px"><input type="checkbox" value="1" <?php checked(1, get_option('wse_force_https_on_frontend'), TRUE); ?> name="wse_force_https_on_frontend" ></td>
+                </tr>
+                <?php echo get_option('wse_force_https_on_frontend'); ?>
                 <tr>
-                    <td style="padding:0 0 30px"><h4><label><?php _e('Force SSL on Admin', 'wp-ssl-enforcer') ?></label></h4></td>
+                    <td style="padding:0 0 30px"><h4><label><?php _e('Force HTTPS on Dashboard', 'wp-ssl-enforcer') ?></label></h4></td>
                     <td style="padding:0 0 30px"><input type="checkbox" value="1" <?php checked(1, get_option('wse_force_https_on_admin'), TRUE); ?> name="wse_force_https_on_admin" ></td>
                 </tr>
-                
+                <?php echo get_option('wse_force_https_on_admin'); ?>
                 <tr>
                     <td><input type="submit" value="<?php _e('Save Changes', 'wp-ssl-enforcer'); ?>" name="submit" id="submit" class="button button-primary"></td>
                 </tr>
             </table>
         </form>
-<?php echo get_option('wse_force_https_on_admin'); ?>
         <?php
         echo '</div>';
     }
     //Forcing SSL on the frontend
     function wse_force_https(){
-        
-        //Checking if the site is a multisite
-        if(is_multisite()){
-        
-            $url = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-            $domain = get_option('wse_domain_to_force_https');
+        //Checking option for forcing https on frontend
+        $checkFrontend = get_option('wse_force_https_on_frontend');
+        if($checkFrontend == '1'){
+            //Checking if the site is a multisite
+            if(is_multisite()){
 
-            if(!is_ssl() && strpos($url, $domain)){
-                wp_redirect('https://' . $url, 301);
-                exit();
-            }
-        } else {
+                $frontendUrl = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+                $domain = get_option('wse_domain_to_force_https');
+
+                if(!is_ssl() && strpos($frontendUrl, $domain)){
+                    wp_redirect('https://' . $frontendUrl, 301);
+                    exit();
+                }
+            } 
+                
             if(!is_ssl()){
-                wp_redirect('https://' . $_SERVER['HTTP_POST'] . $_SERVER['REQUEST_URI'], 301);
-                exit();
+                    wp_redirect('https://' . $_SERVER['HTTP_POST'] . $_SERVER['REQUEST_URI'], 301);
+                    exit();
             }
+            
         }
 
     }
     //Forcing SSL on admin area
     function wse_force_admin_https(){
-        $c = get_option('wse_force_https_on_admin');
-        if($c == 1){
+        $adminUrl = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+        $checkAdmin = get_option('wse_force_https_on_admin');
+        if($checkAdmin == '1' && strpos($adminUrl, '/wp-admin/')){
             force_ssl_admin(TRUE);
-        } else {
-            force_ssl_admin(FALSE);
         }
     }
 }
