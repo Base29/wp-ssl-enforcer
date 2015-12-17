@@ -68,12 +68,12 @@ class WSE {
                     <td style="padding:0 0 30px"><h4><label><?php _e('Force HTTPS on Frontend', 'wp-ssl-enforcer') ?></label></h4></td>
                     <td style="padding:0 0 30px"><input type="checkbox" value="1" <?php checked(1, get_option('wse_force_https_on_frontend'), TRUE); ?> name="wse_force_https_on_frontend" ></td>
                 </tr>
-                <?php echo get_option('wse_force_https_on_frontend'); ?>
+                
                 <tr>
                     <td style="padding:0 0 30px"><h4><label><?php _e('Force HTTPS on Dashboard', 'wp-ssl-enforcer') ?></label></h4></td>
                     <td style="padding:0 0 30px"><input type="checkbox" value="1" <?php checked(1, get_option('wse_force_https_on_admin'), TRUE); ?> name="wse_force_https_on_admin" ></td>
                 </tr>
-                <?php echo get_option('wse_force_https_on_admin'); ?>
+                
                 <tr>
                     <td><input type="submit" value="<?php _e('Save Changes', 'wp-ssl-enforcer'); ?>" name="submit" id="submit" class="button button-primary"></td>
                 </tr>
