@@ -1,14 +1,14 @@
-=== Plugin Name ===
+=== WordPress SSL (HTTPS) Enforcer ===
 Contributors: Base29
 Donate link: http://www.base29.com/
 Tags: HTTPS, SSL, Enforce SSL, Enforce HTTPS
 Requires at least: 3.0
 Tested up to: 4.4
-Stable tag: trunk
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A neat and easy to use slideshow plugin. Works with all major browsers and latest version of wordpress
+A simple wordpress plugin to enforce HTTPS
 
 == Description ==
 
