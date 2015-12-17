@@ -1,7 +1,7 @@
 <?php
 /*
  * Plugin Name: WordPress SSL (HTTPS) Enforcer
- * Plugin URI: https://github.com/Base29/wp-ssl-enforcer
+ * Plugin URI: https://www.base29.com
  * Description: A simple wordpress plugin to enforce HTTPS if the SSL certificate is installed for the domain.
  * Author: Base29
  * Author URI: http://www.base29.com
